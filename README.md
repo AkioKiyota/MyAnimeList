@@ -1,1 +1,1 @@
-# MyAnimeList
+# MyAnimeListBot
