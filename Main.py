@@ -42,14 +42,18 @@ async def suggest(ctx, typ):
     a= main['anime']
     rank= main['rank']
 
+    if len(a['synopsis']) > 250:
+        a['synopsis'] = a['synopsis'][:250] + '...'
+
+    desc = f'{a["synopsis"]}\n\n\n**Score:** {a["mean"]}\n**Ranked:** #{rank}\n**Popularity:** #{a["popularity"]}\n**Members:** {a["num_list_users"]}'
+
     embed = discord.Embed(
         title= a['title'],
-        description= a['synopsis'],
+        description= desc,
         color= 0x1abc9
     )
     embed.set_image(url=a['main_picture']['large'])
-    embed.set_footer(text=f'CURRENT RANK IN MAL: {rank}')
 
-    await ctx.send(embed= embed)
+    await ctx.message.reply(embed= embed)
 
 client.run(TOKEN)

@@ -47,7 +47,8 @@ class Data:
     def anime_large_info(self, id):
         response = requests.get(f'https://api.myanimelist.net/v2/anime/{id}',
                         params={
-                            'fields': 'id,title,main_picture,synopsis,rank'
+                            # MEAN = SCORE
+                            'fields': 'id,title,main_picture,synopsis,rank,mean,num_list_users,popularity'
                         },
                         headers={
                             'Authorization': f'Bearer {self.ACCESS_TOKEN}'
@@ -61,7 +62,8 @@ class Data:
     def anime_suggest(self, typ):
         response = requests.get(f'https://api.myanimelist.net/v2/anime/ranking',
                         params={
-                            'ranking_type': typ
+                            'ranking_type': typ,
+                            'limit': 500
                         },
                         headers={
                             'Authorization': f'Bearer {self.ACCESS_TOKEN}'
