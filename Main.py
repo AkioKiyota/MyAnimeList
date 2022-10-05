@@ -36,9 +36,11 @@ async def info(ctx,txt):
 
     await ctx.send(embed= embed)
 
-@client.commanf()
+@client.command()
 async def suggest(ctx, typ):
-    a= x.suggest(typ)
+    main= x.suggest(typ)
+    a= main['anime']
+    rank= main['rank']
 
     embed = discord.Embed(
         title= a['title'],
@@ -46,6 +48,7 @@ async def suggest(ctx, typ):
         color= 0x1abc9
     )
     embed.set_image(url=a['main_picture']['large'])
+    embed.set_footer(text=f'CURRENT RANK IN MAL: {rank}')
 
     await ctx.send(embed= embed)
 

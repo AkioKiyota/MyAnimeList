@@ -34,15 +34,21 @@ class Data:
         animes = []
 
         for i in result['data']:
-            anime.append(i['id'])
+            animes.append(i['node']['id'])
 
         id = random.choice(animes)
         anime = self.anime_large_info(id)
+        rank= anime['rank']
 
-        return anime
+        x = {'anime': anime, 'rank': rank}
+
+        return x
 
     def anime_large_info(self, id):
-        response = requests.get('https://api.myanimelist.net/v2/anime/{id}?fields=id,title,synopsis,statistics',
+        response = requests.get(f'https://api.myanimelist.net/v2/anime/{id}',
+                        params={
+                            'fields': 'id,title,main_picture,synopsis,rank'
+                        },
                         headers={
                             'Authorization': f'Bearer {self.ACCESS_TOKEN}'
                         })
@@ -53,7 +59,7 @@ class Data:
         return result
 
     def anime_suggest(self, typ):
-        response = requests.get('https://api.myanimelist.net/v2/anime/ranking',
+        response = requests.get(f'https://api.myanimelist.net/v2/anime/ranking',
                         params={
                             'ranking_type': typ
                         },
